@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req:NextRequest, {params}: {params: {chatId: string}}){
+export async function GET(req:NextRequest, {params}: {params: Promise<{chatId: string}>}){
     try {
 
         const session = await getServerSession(authOptions);
@@ -29,7 +29,7 @@ export async function GET(req:NextRequest, {params}: {params: {chatId: string}})
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);

@@ -187,7 +187,7 @@ async function createChatCompletion(messages: any[], options?: any) {
 // ------------------ GET Messages ------------------
 export async function GET(
   req: NextRequest,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -212,7 +212,7 @@ export async function GET(
 // ------------------ POST Messages / AI Response ------------------
 export async function POST(
   req: NextRequest,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   try {
     const start = performance.now();

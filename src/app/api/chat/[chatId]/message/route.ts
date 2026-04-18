@@ -164,8 +164,8 @@ async function createChatCompletion(messages: any[], options?: any) {
   const model =
     options?.model ||
     (isGoogle
-      ? process.env.GOOGLE_MODEL || "gemini-1.5-flash"
-      : process.env.AI_MODEL || "axion-1.5-pro");
+      ? process.env.GOOGLE_MODEL || "google-default-model"
+      : process.env.AI_MODEL || "ai-default-model");
 
   const response = await fetchWithRetry(`${baseURL}/chat/completions`, {
     method: "POST",
@@ -514,8 +514,8 @@ Axion: "Flexbox easiest way — set display flex on parent, then justify-content
         ? "https://generativelanguage.googleapis.com/v1beta/openai/"
         : process.env.OPEN_AI_BASE_URL || "https://api.openai.com/v1";
       const model = isGoogle
-        ? process.env.GOOGLE_MODEL || "gemini-1.5-flash"
-        : process.env.AI_MODEL || "axion-1.5-pro";
+        ? process.env.GOOGLE_MODEL || "google-default-model"
+        : process.env.AI_MODEL || "ai-default-model";
 
       const openai = new OpenAI({
         apiKey,

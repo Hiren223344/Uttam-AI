@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-const DAILY_LIMIT = Number(process.env.DAILY_TOKEN_LIMIT) || 20000;
+const DAILY_LIMIT = Number(process.env.DAILY_TOKEN_LIMIT) || 0;
 
 // Normalize date to start of day
 function startOfDay(date: Date) {

@@ -33,10 +33,28 @@ export function useChats() {
     }, 3000);
   }
 
-  // 🔹 Refresh all chats manually (optional)
-  function refreshChats() {
-    mutate("/api/chat"); // tells SWR to re-fetch
+  async function deleteChat(chatId: string) {
+    try {
+      const res = await fetch(`/api/chat/${chatId}`, { method: "DELETE" });
+      if (res.ok) {
+        // Optimistically remove from cache
+        mutate(
+          "/api/chat",
+          (prev: Chat[] | undefined) => prev?.filter((c) => c.id !== chatId) ?? [],
+          false
+        );
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error("Failed to delete chat:", err);
+      return false;
+    }
   }
 
-  return { chats, error, isLoading, startPollingChat, refreshChats };
+  function refreshChats() {
+    mutate("/api/chat");
+  }
+
+  return { chats, error, isLoading, startPollingChat, refreshChats, deleteChat };
 }

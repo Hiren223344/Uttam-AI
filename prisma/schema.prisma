@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,15 @@ model User {
   emailVerified DateTime?
   image       String?
 
+  firstName String?
+  lastName  String?
+  username  String? @unique
+  
+  imageCount Int @default(0)
+  lastImageDate DateTime?
+
   credits   Int    @default(5000)
+  aiMemory  String? @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime?
   
@@ -70,15 +78,21 @@ model Chat{
 
   message Message[]
   tokenUsage TokenUsage[]
+
+  @@index([userId, createdAt])
 }
 
 model Message {
   id    String   @id  @default(cuid())
   chatId String
-  chat  Chat   @relation(fields: [chatId], references: [id])
+  chat  Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
   role  String
-  content String @db.LongText
+  content String @db.Text
+  reasoning String? @db.Text
+  files     Json?
   createdAt DateTime @default(now())
+
+  @@index([chatId, createdAt])
 }
 
 model TokenUsage {
@@ -87,7 +101,9 @@ model TokenUsage {
   user User @relation(fields: [userId], references: [id])
 
   chatId  String
-  chat Chat @relation(fields: [chatId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
   token Int @default(0)
   createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }

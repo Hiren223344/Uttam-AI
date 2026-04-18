@@ -7,51 +7,25 @@ import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default function Login() {
-    const {data:session, status} = useSession();
+    const { data: session, status } = useSession();
     console.log(session);
-    if(status === "loading") return <p>Loading....</p>;
-    if(session?.user) return redirect("/");
+    if (status === "loading") return <p>Loading....</p>;
+    if (session?.user) return redirect("/");
     return (
-        <div>
-            <header className="p-4 text-2xl font-bold">ChatGPT</header>
+        <div className="min-h-screen flex flex-col font-jakarta">
+            <header className="fixed top-0 left-0 p-6 flex items-center gap-2">
+                <img src="/uttam.png" className="w-8 h-8 opacity-90" alt="Logo" />
+                <span className="text-xl font-bold tracking-tight">Uttam AI</span>
+            </header>
             <div className="max-w-xs m-auto text-center mt-[4rem]">
-                <h1 className="text-3xl font-semibol">Log in or sign up</h1>
-                <p className="text-gray-500 mt-3 text-sm leading-5">You'll get smarter responses and can uploaded files, images and more.</p>
+                <h1 className="text-3xl font-semibold">Log in or sign up</h1>
+                <p className="text-gray-500 mt-3 text-sm leading-5">Welcome to the Frenix Secure Flow.</p>
 
                 <div className="mt-7">
-                    <div>
-                        <form>
-                            <input className="border border-gray-300 p-3 w-full rounded-4xl placeholder:text-gray-400 outline-0" placeholder="Email address" />
-                            <button type="submit" className="rounded-4xl bg-black w-full p-3 text-white dark:bg-white dark:text-black my-7 cursor-pointer">Continue</button>
-                        </form>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <div className="flex-1 h-[1px] bg-gray-200"></div>
-                        <div className="px-1 font-bold text-xs text-gray-800">OR</div>
-                        <div className="flex-1 h-[1px] bg-gray-200"></div>
-                    </div>
-                    <div className="mt-7">
-                        <button className="auth-btns" onClick={()=>signIn("google")}>
-                            <Image src={'https://auth-cdn.oaistatic.com/assets/google-logo-NePEveMl.svg'} width={20} height={20} alt="Google Icon" />
-                            Continue with Google
-                        </button>
-                    </div>
                     <div className="mt-3">
-                        <button className="auth-btns">
-                            <Image src={'https://auth-cdn.oaistatic.com/assets/microsoft-logo-BUXxQnXH.svg'} width={20} height={20} alt="Google Icon" />
-                            Continue with Microsoft Account
-                        </button>
-                    </div>
-                    <div className="mt-3">
-                        <button className="auth-btns">
-                            <Image src={'https://auth-cdn.oaistatic.com/assets/apple-logo-vertically-balanced-rwLdlt8P.svg'} width={20} height={20} alt="Google Icon" />
-                            Continue with Apple
-                        </button>
-                    </div>
-                    <div className="mt-3">
-                        <button className="auth-btns">
-                            <Phone width={20} height={20} />
-                            Continue with phone
+                        <button className="auth-btns w-full flex items-center justify-center p-3 rounded-4xl bg-black text-white dark:bg-white dark:text-black font-semibold cursor-pointer transition-all hover:opacity-80" onClick={() => signIn("frenix")}>
+                            <img src="/uttam.png" className="w-5 h-5 mr-3 dark:invert" alt="Frenix Icon" />
+                            Continue with Frenix
                         </button>
                     </div>
                 </div>

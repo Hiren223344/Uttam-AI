@@ -15,13 +15,18 @@ export async function getTodayTokens(userId: string, chatId?: string) {
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
     console.log("User id", userId)
+  const where: any = {
+    userId,
+    createdAt: { gte: today, lt: tomorrow },
+  };
+
+  if (chatId) {
+    where.chatId = chatId;
+  }
+
   const result = await prisma.tokenUsage.aggregate({
     _sum: { token: true },
-    where: {
-      userId,
-      chatId,
-      createdAt: { gte: today, lt: tomorrow },
-    },
+    where,
   });
 
   return result._sum.token || 0;
